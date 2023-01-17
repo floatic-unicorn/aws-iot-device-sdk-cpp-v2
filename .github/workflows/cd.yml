@@ -53,6 +53,7 @@ jobs:
           rosdep update
           cd iot_ws/iot
           floom-generate rosdebian
+          sudo fakeroot debian/rules binary
           ls ../*.deb
         shell: bash
   
