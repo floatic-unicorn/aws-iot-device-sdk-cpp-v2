@@ -33,7 +33,7 @@ jobs:
     needs: ecr_setting
     runs-on: ubuntu-latest
     container:
-      image: 557571393534.dkr.ecr.ap-northeast-2.amazonaws.com/floom:latest
+      image: 557571393534.dkr.ecr.ap-northeast-2.amazonaws.com/floom
       credentials:
         username: AWS
         password: ${{ needs.ecr_setting.outputs.ecr_password }}
