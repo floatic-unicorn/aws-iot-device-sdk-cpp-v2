@@ -56,7 +56,7 @@ jobs:
           ls ../*.deb
   
       - name: AWS Mfa login
-        uses: ./build_ws/src/floatic-ted/.github/actions/aws-mfa-login
+        uses: ./iot_ws/iot/.github/actions/aws-mfa-login
         with:
           access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
