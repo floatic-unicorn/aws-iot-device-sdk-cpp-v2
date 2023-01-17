@@ -67,4 +67,4 @@ jobs:
       
       - name: Upload to S3
         run: |
-          aws s3 cp $(ls iot_ws/*.deb) s3://robotics-workflow-archive/floatic-aws-iot-sdk
+          aws s3 cp $(ls iot_ws/*.deb) s3://robotics-workflow-archive/floatic-aws-iot-sdk/
