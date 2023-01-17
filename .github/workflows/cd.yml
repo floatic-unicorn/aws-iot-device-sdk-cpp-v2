@@ -48,7 +48,8 @@ jobs:
           git submodule update --init --recursive
 
       - name: Generate debian file
-        run: | 
+        run: |
+          chmod +x /opt/floatic/debian/humble/setup.sh
           /opt/floatic/debian/humble/setup.sh
           rosdep update
           cd iot_ws/iot
