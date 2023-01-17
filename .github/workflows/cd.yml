@@ -49,7 +49,7 @@ jobs:
 
       - name: Generate debian file
         run: | 
-          source /opt/floatic/debian/humble/setup.bash
+          /opt/floatic/debian/humble/setup.sh
           rosdep update
           cd iot_ws/iot
           floom-generate rosdebian
