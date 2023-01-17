@@ -49,12 +49,12 @@ jobs:
 
       - name: Generate debian file
         run: |
-          chmod +x /opt/floatic/debian/humble/setup.sh
-          /opt/floatic/debian/humble/setup.sh
+          source /opt/floatic/debian/humble/setup.bash
           rosdep update
           cd iot_ws/iot
           floom-generate rosdebian
           ls ../*.deb
+        shell: bash
   
       - name: AWS Mfa login
         uses: ./iot_ws/iot/.github/actions/aws-mfa-login
