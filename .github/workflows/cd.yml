@@ -48,6 +48,11 @@ jobs:
           secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           mfa_key: ${{ secrets.MFA_KEY }}
           mfa_arn: ${{ secrets.MFA_ARN }}
+      
+      - name: PPA server access
+        uses: ./aws_iot/etc/.github/actions/floatic-ppa-access
+        with:
+          target_group_name: ${{ secrets.SECURITY_GROUP_NAME }}
 
       - name: Checkout submodules
         run: |
