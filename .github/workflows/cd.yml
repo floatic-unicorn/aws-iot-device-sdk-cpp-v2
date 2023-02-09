@@ -42,7 +42,7 @@ jobs:
           path: 'aws_iot/etc/'
 
       - name: AWS Mfa login
-        uses: aws_iot/etc/.github/actions/aws-mfa-login
+        uses: ./aws_iot/etc/.github/actions/aws-mfa-login
         with:
           access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
