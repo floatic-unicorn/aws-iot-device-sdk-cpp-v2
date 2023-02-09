@@ -29,7 +29,7 @@ jobs:
     outputs:
       ecr_password: ${{ steps.get_ecr_password.outputs.ECR_PASSWORD }}
 
-  build_debian:
+  debian_build:
     needs: ecr_setting
     runs-on: ubuntu-latest
     container:
@@ -40,31 +40,34 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          path: 'iot_ws/iot/'
+          path: 'aws_iot/etc/'
 
-      - name: Checkout submodules
-        run: |
-          cd iot_ws/iot
-          git submodule update --init --recursive
-
-      - name: Generate debian file
-        run: |
-          source /opt/floatic/debian/humble/setup.bash
-          rosdep update
-          cd iot_ws/iot
-          floom-generate rosdebian
-          sudo fakeroot debian/rules binary
-          ls ../*.deb
-        shell: bash
-  
       - name: AWS Mfa login
-        uses: ./iot_ws/iot/.github/actions/aws-mfa-login
+        uses: floatic-unicorn/floatic-github-actions/aws-mfa-login@main
         with:
           access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           mfa_key: ${{ secrets.MFA_KEY }}
           mfa_arn: ${{ secrets.MFA_ARN }}
+
+      - name: PPA server access
+        uses: floatic-unicorn/floatic-github-actions/floatic-ppa-access@main
+        with:
+          target_group_name: ${{ secrets.SECURITY_GROUP_NAME }}
+
+      - name: Checkout submodules
+        run: |
+          cd aws_iot/etc
+          git submodule update --init --recursive
+      
+      - name: Generate debian file
+        run: |
+          source /opt/floatic/debian/ros/humble/setup.bash
+          cd aws_iot/etc
+          floom-generate rosdebian
+          ls ../*.deb
+        shell: bash
       
       - name: Upload to S3
         run: |
-          aws s3 cp $(ls iot_ws/*.deb) s3://robotics-workflow-archive/floatic-aws-iot-sdk/
+          aws s3 cp $(ls aws_iot/*.deb) s3://robotics-workflow-archive/aws_iot_sdk/
